@@ -18,15 +18,18 @@ if (JSON.parse(feedbackData)) {
 function setInputData() {
     feedbackFormState.email = formEl[0].value;
     feedbackFormState.message = formEl[1].value;
-    console.log(formEl[0].value);
     localStorage.setItem('feedback-form-state', JSON.stringify(feedbackFormState));
 }
 
 formEl.addEventListener('input', throttle(setInputData, 500));
 
 formEl.addEventListener('submit', (e) => {
-    e.preventDefault();
-    formEl.reset();
-    console.log(JSON.parse(feedbackData));
-    localStorage.removeItem('feedback-form-state');
+    if (formEl[0].value && formEl[1].value) {
+        e.preventDefault();
+        formEl.reset();
+        console.log(JSON.parse(feedbackData));
+        localStorage.removeItem('feedback-form-state');
+    } else {
+        alert('Заповніть всі поля!!')
+    }
 })
